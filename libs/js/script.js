@@ -64,7 +64,7 @@ function useGeolocation(pos){
         },
         success: (result) => {
             selectedCountry = result.data.results[0].components["ISO_3166-1_alpha-2"];
-            $(`#countries-dropdown option[value=${selectedCountry}]`).attr("selected", "selected");
+            $(`select[name^="countries-dd"] option[value=${selectedCountry}]`).attr("selected","selected");
             getCountryMap(selectedCountry);
         },
         error: function (jqXHR, textStatus, errorThrown){
@@ -75,7 +75,7 @@ function useGeolocation(pos){
 }
 
 const useDefault = () => {
-    $("#countries-dropdown option[value='GB']").attr("selected", "selected");
+    $(`select[name^="countries-dd"] option[value=${selectedCountry}]`).attr("selected","selected");
     getCountryMap(selectedCountry);
 }
 
