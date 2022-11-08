@@ -3,17 +3,17 @@
 <head>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
-    <link rel="stylesheet" href="./libraries/leaflet.css" />
-    <link rel="stylesheet" href="./libraries/bootstrap-5.2.2-dist/css/bootstrap.min.css" />
-    <link rel="stylesheet" href="./libs/css/custom.css" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <link rel="stylesheet" href="./libraries/leaflet.css">
+    <link rel="stylesheet" href="./libraries/bootstrap-5.2.2-dist/css/bootstrap.min.css">
+    <link rel="stylesheet" href="./libs/css/custom.css">
     <link rel="stylesheet" href="./libraries/font-awesome/css/fontawesome.min.css">
     <link rel="stylesheet" href="./libraries/font-awesome/css/brands.min.css">
     <link rel="stylesheet" href="./libraries/font-awesome/css/solid.min.css">
     <link rel="stylesheet" href="./libraries/extra-markers/css/leaflet.extra-markers.min.css">
     <link rel="stylesheet" href="./libraries/easy-button.css">
-    <link rel="stylesheet" href="./libraries/leafletMarkerCluster/MarkerCluster.css" />
-    <link rel="stylesheet" href="./libraries/leafletMarkerCluster/MarkerCluster.Default.css" />
+    <link rel="stylesheet" href="./libraries/leafletMarkerCluster/MarkerCluster.css">
+    <link rel="stylesheet" href="./libraries/leafletMarkerCluster/MarkerCluster.Default.css">
     <title>Gazetteer</title>
     <link rel="icon" type="image/x-icon" href="./libs/assets/icon.png">
 </head>
@@ -29,7 +29,7 @@
     <div id="map"></div>
 <!-- Modals -->
 <!-- Country Info modal -->
-<div class="modal fade" id="infoModal" tabindex="-1" aria-labelledby="infoModalLabel" aria-hidden="true">
+<div class="modal fade" id="infoModal" tabindex="-1" aria-hidden="true">
   <div class="modal-dialog modal-dialog-scrollable ">
     <div class="modal-content dark-bgk">
       <div class="modal-header">
@@ -38,7 +38,7 @@
       </div>
       <div class="modal-body">
         <div class="text-center w-70 pb-1">
-          <img class="img-fluid" id="flag">
+          <img class="img-fluid" id="flag" alt="country flag">
         </div>
         <table class="table">
           <tbody>
@@ -116,13 +116,15 @@
       </div>
       <div class="modal-body">
         <div class="currency-content">
-              <input class="form-control w-50 d-inline" type="number" id="dollars" value="1"/><span>&nbsp;$(USD) 
-                <i class="fa fa-arrow-right"></i> <span id="converted"></span> <span id="local-currency"></span>
+              <input class="form-control w-50 d-inline" type="number" id="dollars" value="1">
+              &nbsp;$(USD) 
+                <i class="fa fa-arrow-right"></i> 
+                <span id="converted"></span> 
+                <span id="local-currency"></span>
         </div>
         </div>  
       </div>
     </div>
-  </div>
 </div>
 
 <!-- Holidays modal -->

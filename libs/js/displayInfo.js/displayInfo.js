@@ -23,7 +23,6 @@ export const displayCountryInfo = (r, countryMarkers) => {
 }
 
 export const displayExchangeRate = (r) => {
-    console.log(r.data);
     let exchangeRate = r.data;
     $('#converted').html(exchangeRate.toFixed(4));
     $('#dollars').on("change", function(){
@@ -52,7 +51,7 @@ export const displayCities = (cities, capital, selectedCountry) => {
     let sortedCities = filteredCities.sort((a, b) => (a.name > b.name) ? 1 : -1);
     sortedCities.unshift(cap);
     //sorted so that first is capital then in alphabetical order
-    sortedCities.map((c, i) => {
+    sortedCities.map((c) => {
         $('<option>', {value: `${c.lat},${c.lng}`, text: c.name}).appendTo($('#cities-dd'));
         let marker = L.marker([c.lat, c.lng], {
             icon: L.ExtraMarkers.icon(cityOptions),
@@ -120,6 +119,7 @@ export const displayWeatherObs = (data) => {
 }
 
 export const displayHolidays = (data) => {
+    console.log(data);
     data.map(h => {
         let date = Date.parse(h.date).toString("d MMM");
         let holidayHTML = `<tr>

@@ -21,19 +21,19 @@ import { displayCountryInfo,
         success: function(r){
             displayCountryInfo(r, countryMarkers);
             getTemperatures(bounds);
-            //getExchangeRate(r.data.curr);
+            getExchangeRate(r.data.curr);
             getCities(r.data.capital, bounds, selectedCountry);
             getWikipediaArticles(bounds, selectedCountry);
             getWeather([r.data.capital.lat, r.data.capital.lng]);
-            //getHolidays(selectedCountry);
+            getHolidays(selectedCountry);
         },
         error: function (jqXHR, textStatus, errorThrown){
             console.log(textStatus, errorThrown);
             displayError('info');
             alert('Error - country information not loaded');
          },
-         });
-};
+         })
+}
 
 function getExchangeRate(target){
     $.ajax({
@@ -48,7 +48,7 @@ function getExchangeRate(target){
             },
             error: function (jqXHR, textStatus, errorThrown){
                 console.log(textStatus, errorThrown);
-                modals['currency']['btn'].disable();
+                displayError("currency");
              },
          });
 }
@@ -66,18 +66,16 @@ function getCities(capital, bounds, selectedCountry){
             west: bounds["_southWest"].lng,
          },
          success: (result) => {
-            console.log(result);
             displayCities(result.data, capital, selectedCountry);
         },
          error: function (jqXHR, textStatus, errorThrown){
             $('<option>', {value: `${capital.lat},${capital.lng}`, text: capital.name}).appendTo($('#cities-dd'));
-            loading.hide();
             alert('Cities Overlay not loaded');
          }
      })
 }
 
-function getWeather(coordsArray){
+export function getWeather(coordsArray){
     $('#weather-content').hide();
     $.ajax({
           type: 'POST',
@@ -93,10 +91,10 @@ function getWeather(coordsArray){
            },
            error: function (jqXHR, textStatus, errorThrown){
             console.log(textStatus, errorThrown);
-            modals["weather"]["btn"].disable();
+            displayError("weather");
          },
         })
-};
+}
 
 function getForecast(coordsArray){
     $('#forecast').empty();
@@ -155,14 +153,13 @@ function getWikipediaArticles(bounds, selectedCountry){
         error: function (jqXHR, textStatus, errorThrown){
         console.log(textStatus, errorThrown);
         alert('Error - did not retrieve wikipedia articles');
-        modals['wikipedia']['btn'].disable();
+        displayError('wikipedia');
          },
      })
 }
 
 
 function getHolidays(selectedCountry){
-    console.log(selectedCountry)
     $('#holidays').empty();
     let year = new Date().getFullYear() - 1;
     $.ajax({
@@ -174,7 +171,7 @@ function getHolidays(selectedCountry){
                  year: year,
              },
             success: function(result){
-                displayHolidays(result.data);
+                displayHolidays(result.holidays);
             },
             error: function (jqXHR, textStatus, errorThrown){
                 console.log(textStatus, errorThrown);

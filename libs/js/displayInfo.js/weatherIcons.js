@@ -21,16 +21,16 @@ export const weatherIcon = {
 export function useWeatherCode(code){
     if (code == 0) {
         return ['sun', 'clear sky'];
-    };
+    }
     if (code < 4){
         return ['cloud-sun', 'partly cloudy']
-    };
+    }
     if(code == 4){
         return ['cloud', 'overcast'];
-    };
+    }
     if (code < 50){
         return ['smog', 'fog'];
-    };
+    }
     if(code < 60){
         return ['cloud-rain', 'drizzle']
     }

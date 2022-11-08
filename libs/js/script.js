@@ -1,11 +1,11 @@
-import { getCountryMap, layerControl } from './loadMap.js';
+import { getCountryMap } from "./loadMap.js";
+import { getWeather } from "./getInfo/getInfo.js";
 
 //variables
 var selectedCountry = "GB";
 
 
-export const loading = new bootstrap.Modal($('#loading'),{keyboard: false});
-
+export const loading = new bootstrap.Modal($("#loading"),{keyboard: false});
 
 // Event listeners
 $(document).ready(loading.show());
@@ -28,9 +28,9 @@ function populateCountries(){
         dataType: 'json',
         success: function(data){
             let list = data.data.sort((a, b) => (a.name > b.name) ? 1 : -1);
-            for (let el in list){
+            for (const el in list){
                 $('<option>', {value: list[el]["code"], text: list[el]["name"]}).appendTo($('#countries-dropdown'));
-          }
+            }
          },
          error: function (jqXHR, textStatus, errorThrown){
             console.log(textStatus, errorThrown);
@@ -50,7 +50,7 @@ const geoLocation = () => {
         );
     } else {
         useDefault();
-    };
+    }
 }
 
 function useGeolocation(pos){

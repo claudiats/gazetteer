@@ -1,4 +1,5 @@
 import getCountryInfo from "./getInfo/getInfo.js";
+import { loading } from "./script.js";
 
 
 
@@ -37,8 +38,8 @@ var countryMarkers = L.markerClusterGroup({
 });
 var countryLayer = L.geoJSON([], {style: {color: 'orange'}});
 var countryGroup = L.featureGroup([countryMarkers, countryLayer]);
-let citiesGroup;
-var tempsGroup;
+// let citiesGroup;
+// var tempsGroup;
 
 let modals = {
     'info': {
@@ -58,7 +59,6 @@ let modals = {
     }
 
 }
-
 
 function createModals(name){
      modals[name]["modal"] = new bootstrap.Modal($(`#${name}Modal`),{keyboard: false});
@@ -86,9 +86,6 @@ function getCountryMap(selectedCountry){
             countryLayer.addData(response.data).addTo(lmap);
             let bounds = countryLayer.getBounds();
             lmap.fitBounds(bounds);
-            console.log(citiesGroup);
-            console.log(layerControl);   
-    
             getCountryInfo(selectedCountry, bounds, countryMarkers);
          },
          error: function (jqXHR, textStatus, errorThrown){
