@@ -4,123 +4,185 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
-    <link rel="stylesheet" href="./libs/css/style.css" />
-    <link rel="stylesheet" href="./libs/css/leaflet.css" />
-    <link rel="stylesheet" href="./libs/assets/bootstrap-5.2.2-dist/css/bootstrap.min.css" />
-    <link rel="stylesheet" href="./libs/assets/font-awesome/css/fontawesome.min.css">
-    <link rel="stylesheet" href="./libs/assets/font-awesome/css/brands.min.css">
-    <link rel="stylesheet" href="./libs/assets/font-awesome/css/solid.min.css">
-    <link rel="stylesheet" href="./libs/css/leaflet-beautify-marker-icon.css">
-    <link rel="stylesheet" href="./libs/css/easy-button.css">
-    <link rel="stylesheet" href="./libs/assets/leafletMarkerCluster/MarkerCluster.css" />
-    <link rel="stylesheet" href="./libs/assets/leafletMarkerCluster/MarkerCluster.Default.css" />
+    <link rel="stylesheet" href="./libraries/leaflet.css" />
+    <link rel="stylesheet" href="./libraries/bootstrap-5.2.2-dist/css/bootstrap.min.css" />
+    <link rel="stylesheet" href="./libs/css/custom.css" />
+    <link rel="stylesheet" href="./libraries/font-awesome/css/fontawesome.min.css">
+    <link rel="stylesheet" href="./libraries/font-awesome/css/brands.min.css">
+    <link rel="stylesheet" href="./libraries/font-awesome/css/solid.min.css">
+    <link rel="stylesheet" href="./libraries/extra-markers/css/leaflet.extra-markers.min.css">
+    <link rel="stylesheet" href="./libraries/easy-button.css">
+    <link rel="stylesheet" href="./libraries/leafletMarkerCluster/MarkerCluster.css" />
+    <link rel="stylesheet" href="./libraries/leafletMarkerCluster/MarkerCluster.Default.css" />
     <title>Gazetteer</title>
     <link rel="icon" type="image/x-icon" href="./libs/assets/icon.png">
 </head>
 
 <body>
     <nav class="navbar fixed-top d-flex flex-row justify-content-around">
-        <a class="navbar-brand" id="title" href="#">Gazetteer</a>
-        <select id="countries-dropdown">
+        <h2>Gazetteer</h2>
+        <div class="d-inline-flex">
+        <select class="form-select form-select-sm" id="countries-dropdown">
         </select>
+      </div>
     </nav>
     <div id="map"></div>
-  <!-- Modals -->
-    <!-- Weather modal -->
-<div id="cloud-sun-modal" class="modal mdl">
-  <div class="mdl-content">
-    <span class="close" id="close-cloud-sun">&times;</span>
-    <select id="cities-dd"></select>
-    <div class="d.flex" id="weather-content">
-      <div class="text-center">
-        <h1><i id="weather-icon"></i> <span class="temp-heading" id="current-temp"></span>&#176;</h1>
-        <h3 id="description"></h3>
+<!-- Modals -->
+<!-- Country Info modal -->
+<div class="modal fade" id="infoModal" tabindex="-1" aria-labelledby="infoModalLabel" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-scrollable ">
+    <div class="modal-content dark-bgk">
+      <div class="modal-header">
+        <h5 class="modal-title" id="name"></h5>
+        <button type="button" class="btn-close accent" data-bs-dismiss="modal" aria-label="Close"></button>
       </div>
-    <table class="table">
-        <tr>
-          <th scope="row"><i class="fa fa-temperature-arrow-up"></i> High</th>
-          <td><span id='max'></span>&#176;</td>
-        </tr>
-        <tr>
-          <th scope="row"><i class="fa fa-temperature-arrow-down"></i> Low</th>
-          <td><span id='min'></span>&#176;</td>
-        </tr>
-        <tr>
-          <th><i class="fa fa-droplet"></i> Humidity</th>
-          <td><span id="humidity"></span>%</td>
-        </tr>
-        <tr>
-          <th><i class="fa fa-wind"></i> Wind speed</th>
-          <td><span id="wind"></span> km/s</td>
-        </tr>
-      </tbody>
-    </table>
-  </div>
+      <div class="modal-body">
+        <div class="text-center w-70 pb-1">
+          <img class="img-fluid" id="flag">
+        </div>
+        <table class="table">
+          <tbody>
+            <tr>
+              <th scope="row"><i class="fa fa-chart-area"></i> Area</th>
+              <td><span id='area'></span> km&#178;</td>
+            </tr>
+            <tr>
+              <th scope="row"><i class="fa fa-people-group"></i> Population</th>
+              <td id="pop"></td>
+            </tr>
+            <tr>
+              <th><i class="fa fa-landmark-flag"></i> Capital</th>
+              <td><span id="capital"></span><br>
+            </tr>
+            <tr>
+              <th><i class="fa fa-coins"></i> Currency</th>
+              <td><span id="currency"></span><br>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
   </div>
 </div>
+
+<!-- Weather modal -->
+<div class="modal fade" id="weatherModal" tabindex="-1" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-scrollable ">
+    <div class="modal-content dark-bgk">
+      <div class="modal-header">
+        <h5 class="modal-title"><select class="select-form w-200" id="cities-dd"></select></h5>
+        <button type="button" class="btn-close accent" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body" id="weather-content">
+        <div class="text-center">
+          <h1><i id="weather-icon"></i> <span class="temp-heading" id="current-temp"></span>&#176;</h1>
+          <h3 id="description"></h3>
+      <table class="table">
+          <tr>
+            <th scope="row"><i class="fa fa-temperature-arrow-up"></i> High</th>
+            <td><span id='max'></span>&#176;</td>
+          </tr>
+          <tr>
+            <th scope="row"><i class="fa fa-temperature-arrow-down"></i> Low</th>
+            <td><span id='min'></span>&#176;</td>
+          </tr>
+          <tr>
+            <th><i class="fa fa-droplet"></i> Humidity</th>
+            <td><span id="humidity"></span>%</td>
+          </tr>
+          <tr>
+            <th><i class="fa fa-wind"></i> Wind speed</th>
+            <td><span id="wind"></span> km/s</td>
+          </tr>
+      </table>
+      <h4>Forecast</h4>
+      <div class="row row-cols-1 row-cols-md-2 g-2" id="forecast">
+      </div>
+    </div>
+      </div>
+    </div>
+  </div>
+</div>
+
 
 <!-- Currency modal -->
-<div id="coins-modal" class="modal mdl">
-  <div class="mdl-content">
-    <span class="close" id="close-coins">&times;</span>
-    <div class="text-center">
-      <h4>Exchange rate <span id="currency-name"></span></h4>
-      <input type="number" id="dollars" value="1"/><span> $(USD) <i class="fa fa-arrow-right"></i> <span id="converted"></span> <span id="local-currency"></span>
-    </div>  
-  </div>
-</div>
-
-<!-- COuntry modal -->
-<div id="info-modal" class="modal mdl">
-  <div class="mdl-content">
-    <span class="close" id="close-info">&times;</span>
-    <div class="text-center">
-      <h4 id="name"></h4>
-      <img id="flag">
-    </div>
-      <table class="table">
-        <tbody>
-          <tr>
-            <th scope="row"><i class="fa fa-chart-area"></i> Area</th>
-            <td><span id='area'></span> km&#178;</td>
-          </tr>
-          <tr>
-            <th scope="row"><i class="fa fa-people-group"></i> Population</th>
-            <td id="pop"></td>
-          </tr>
-          <tr>
-            <th><i class="fa fa-landmark-flag"></i> Capital</th>
-            <td><span id="capital"></span><br>
-          </tr>
-          <tr>
-            <th><i class="fa fa-coins"></i> Currency</th>
-            <td><span id="currency"></span><br>
-            </td>
-          </tr>
-        </tbody>
-      </table>
-</div>
-</div>
-
-<div id="loading" class="modal mdl">
-  <div class="mdl-content" id="loading-wrapper">
-    <div class="text-center">
-      <div class="spinner-border" role="status">
-        <span class="sr-only">Loading...</span>
+<div class="modal fade" id="currencyModal" tabindex="-1" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-scrollable ">
+    <div class="modal-content dark-bgk">
+      <div class="modal-header">
+        <h5 class="modal-title">Exchange rate</h5>
+        <button type="button" class="btn-close accent" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+        <div class="currency-content">
+              <input class="form-control w-50 d-inline" type="number" id="dollars" value="1"/><span>&nbsp;$(USD) 
+                <i class="fa fa-arrow-right"></i> <span id="converted"></span> <span id="local-currency"></span>
+        </div>
+        </div>  
       </div>
     </div>
   </div>
+</div>
+
+<!-- Holidays modal -->
+<div class="modal fade" id="holidaysModal" tabindex="-1" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-scrollable ">
+    <div class="modal-content dark-bgk">
+      <div class="modal-header">
+        <h5 class="modal-title">Holidays Calendar</h5>
+        <button type="button" class="btn-close accent" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+          <table class="table table-borderless">
+            <tbody id="holidays">
+            </tbody>
+          </table>
+      </div>
+    </div>
   </div>
 </div>
-<script type="application/javascript" src="./libs/js/leaflet.js"></script>
-<script type="application/javascript" src="./libs/js/jquery-3.6.1.min.js"></script>
-<script type="application/javascript" src="./libs/assets/bootstrap-5.2.2-dist/js/bootstrap.min.js"></script>
-<script type="application/javascript" src="./libs/js/leaflet-beautify-marker-icon.js"></script>
-<script type="application/javascript" src="./libs/js/easy-button.js"></script>
-<script type="application/javascript" src="./libs/js/leaflet.markercluster.js"></script>
-<script type="application/javascript" src="./libs/js/leaflet.featuregroup.subgroup.js"></script>
-<script type="application/javascript" src="./libs/js/chroma.min.js"></script>
-<script type="application/javascript" src="./libs/js/script.js"></script> 
+  
+<!-- Wikipedia Modal -->
+<div class="modal fade" id="wikipediaModal" tabindex="-1" aria-hidden="true">
+  <div class="modal-dialog modal-lg modal-dialog-scrollable ">
+    <div class="modal-content">
+      <div class="modal-header dark-bgk">
+        <h5 class="modal-title">Related Articles</h5>
+        <button type="button" class="btn-close accent" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body p-0" id="articles-body">
+        <ul class="list-group list-group-flush" id="articles"></ul>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Loading -->
+<div class="modal" id="loading" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered">
+    <div class="modal-content" id="loading-content">
+      <div class="modal-body text-center">
+        <div class="spinner-border" role="status">
+          <span class="sr-only">Loading...</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</div> 
+
+
+<script type="application/javascript" src="./libraries/leaflet.js"></script>
+<script type="application/javascript" src="./libraries/jquery-3.6.1.min.js"></script>
+<script type="application/javascript" src="./libraries/bootstrap-5.2.2-dist/js/bootstrap.bundle.min.js"></script>
+<script type="application/javascript" src="./libraries/extra-markers/js/leaflet.extra-markers.min.js"></script>
+<script type="application/javascript" src="./libraries/easy-button.js"></script>
+<script type="application/javascript" src="./libraries/leaflet.markercluster.js"></script>
+<script type="application/javascript" src="./libraries/leaflet.featuregroup.subgroup.js"></script>
+<script type="application/javascript" src="./libraries/chroma.min.js"></script>
+<script type="text/javascript" src="./libraries/date.js"></script>
+<script type="text/javascript" src="./libraries/numeral.min.js"></script>
+<script type="module" src="./libs/js/script.js"></script> 
      
 </body>
 </html>

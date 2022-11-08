@@ -1,0 +1,76 @@
+@use 'colors';
+
+html, body{    
+    height: 100%;
+    width: 100%;
+    overflow: hidden;
+    margin: 0;
+    background-color: colors.$primary;
+}
+
+body {
+    color: colors.$text;
+    padding-top: 60px;
+}
+
+.navbar {
+    background-color: colors.$primary;
+    margin: 0;
+    padding: 0;
+    height: 60px;
+}
+
+#map {
+    width:auto;
+    height: 100%;
+}
+
+.list-group-item{
+  background-color: colors.$primary;
+  color: white;
+}
+
+tr:nth-child(even) {
+  background-color: colors.$alt;
+}
+
+.list-group-item:hover{
+   color: colors.$accent;
+   background-color: colors.$alt;   
+}
+
+a:link {
+  text-decoration: none;
+}
+
+.accent {
+  background-color: colors.$accent;
+} 
+
+#loading-content{
+  background-color: transparent;
+  border-width: 0;
+}
+
+.summary {
+  font-size: 0.8em;
+}
+
+.table {
+  color: colors.$text;
+}
+
+.dark-bgk {
+  background-color: colors.$primary;
+  color: colors.$text;
+}
+
+.card-body{
+  background-color: colors.$alt;
+}
+
+.card {
+  background-color: colors.$primary;
+  color: colors.$text;
+  border-width: 0;
+}
